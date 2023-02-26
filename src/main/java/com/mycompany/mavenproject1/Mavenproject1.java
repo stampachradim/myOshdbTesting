@@ -203,49 +203,49 @@ public class Mavenproject1 {
 
 
 
-    //snapshot s více timestamps - počet prvků na základě filtru - Nelze použít funkci Geo
-    //NENÍ použito groupByEntity a JE použito aggregateByTimestamp
-    //seřazeno podle timestamp a podle prvku OSM
-    public static void main(String[] args) throws Exception {
-        OSHDBDatabase oshdb = new OSHDBH2("D:/NetBeansProjects/heidelberg.oshdb.mv.db");
-        SortedMap<OSHDBTimestamp,List<OSMEntitySnapshot>> result = OSMEntitySnapshotView.on(oshdb)
-//            .areaOfInterest(OSHDBBoundingBox.bboxWgs84Coordinates(8.6634,49.3965,8.7245,49.4268))
-            .timestamps("2020-01-01", "2021-01-01", Interval.YEARLY)
-//            .filter("(leisure=park and geometry:polygon) or (amenity=bench and (geometry:point or geometry:line))")  //přednost ve filtrech se řeší závorkami
-//            .filter("(type:way and highway in (motorway, motorway_link, trunk, trunk_link, primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, unclassified, residential) or (highway=service and service=alley))") //hodnota náleží do množiny
-            .filter("type:way and highway=residential and name!=* and noname!=yes")  //přednost ve filtrech se řeší závorkami    //závorky nejsou vlastně nutné, tento příkaz je pro kontrolu kvality dat - chybějících atributů
-            .aggregateByTimestamp()                                               //vytvori Mapu podle timestampu
-//            .count();
-            .collect(); //vraci list snapshotu pro jednotlive objekty. 
-        System.out.println("size: "+result.size()); 
-    
-        int i=0;
-        for (Map.Entry mapElement : result.entrySet()){      //for each loop - pro každý timestamp...
-            i=i+1;
-            OSHDBTimestamp timestamp = (OSHDBTimestamp) mapElement.getKey();
-            System.out.print(i+" timestamp: "+timestamp+" ");
-            List<OSMEntitySnapshot> snapshotList = (List<OSMEntitySnapshot>) mapElement.getValue(); //...získej list snapshotů
-
-            int j=0;
-            for (OSMEntitySnapshot snapshot : snapshotList){             //for each loop - pro každý snapshot prvku OSM
-                j=j+1;
-                System.out.print("j: "+j+" ");
-                long entita=snapshot.getEntity().getId();   
-                System.out.print(" entita: "+entita+" ");
-                OSHDBTags tags=snapshot.getEntity().getTags();  //a atributy. Místo tagů vrací čísla???
-
-                int k=0;
-                for (OSHDBTag tag : tags){                  //vypise jednotlive tagy
-                    k=k+1;
-                int tagKey=tag.getKey(); //vraci jen cisla
-                int tagValue=tag.getValue();
-//                        TagTranslator.getOSMRoleOf(tagKey); //tady by se muselo definovat spojeni do DB, kde jsou keytables kodujici cisla do tagu
-                    System.out.print(k+". tag: "+tagKey+"="+tagValue+" ");        
-                }
-            }            
-        }
-        System.out.println("Diggy diggy hole!");
-    }
+//    //snapshot s více timestamps - počet prvků na základě filtru - Nelze použít funkci Geo
+//    //NENÍ použito groupByEntity a JE použito aggregateByTimestamp
+//    //seřazeno podle timestamp a podle prvku OSM
+//    public static void main(String[] args) throws Exception {
+//        OSHDBDatabase oshdb = new OSHDBH2("D:/NetBeansProjects/heidelberg.oshdb.mv.db");
+//        SortedMap<OSHDBTimestamp,List<OSMEntitySnapshot>> result = OSMEntitySnapshotView.on(oshdb)
+////            .areaOfInterest(OSHDBBoundingBox.bboxWgs84Coordinates(8.6634,49.3965,8.7245,49.4268))
+//            .timestamps("2020-01-01", "2021-01-01", Interval.YEARLY)
+////            .filter("(leisure=park and geometry:polygon) or (amenity=bench and (geometry:point or geometry:line))")  //přednost ve filtrech se řeší závorkami
+////            .filter("(type:way and highway in (motorway, motorway_link, trunk, trunk_link, primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, unclassified, residential) or (highway=service and service=alley))") //hodnota náleží do množiny
+//            .filter("type:way and highway=residential and name!=* and noname!=yes")  //přednost ve filtrech se řeší závorkami    //závorky nejsou vlastně nutné, tento příkaz je pro kontrolu kvality dat - chybějících atributů
+//            .aggregateByTimestamp()                                               //vytvori Mapu podle timestampu
+////            .count();
+//            .collect(); //vraci list snapshotu pro jednotlive objekty. 
+//        System.out.println("size: "+result.size()); 
+//    
+//        int i=0;
+//        for (Map.Entry mapElement : result.entrySet()){      //for each loop - pro každý timestamp...
+//            i=i+1;
+//            OSHDBTimestamp timestamp = (OSHDBTimestamp) mapElement.getKey();
+//            System.out.print(i+" timestamp: "+timestamp+" ");
+//            List<OSMEntitySnapshot> snapshotList = (List<OSMEntitySnapshot>) mapElement.getValue(); //...získej list snapshotů
+//
+//            int j=0;
+//            for (OSMEntitySnapshot snapshot : snapshotList){             //for each loop - pro každý snapshot prvku OSM
+//                j=j+1;
+//                System.out.print("j: "+j+" ");
+//                long entita=snapshot.getEntity().getId();   
+//                System.out.print(" entita: "+entita+" ");
+//                OSHDBTags tags=snapshot.getEntity().getTags();  //a atributy. Místo tagů vrací čísla???
+//
+//                int k=0;
+//                for (OSHDBTag tag : tags){                  //vypise jednotlive tagy
+//                    k=k+1;
+//                int tagKey=tag.getKey(); //vraci jen cisla
+//                int tagValue=tag.getValue();
+////                        TagTranslator.getOSMRoleOf(tagKey); //tady by se muselo definovat spojeni do DB, kde jsou keytables kodujici cisla do tagu
+//                    System.out.print(k+". tag: "+tagKey+"="+tagValue+" ");        
+//                }
+//            }            
+//        }
+//        System.out.println("Diggy diggy hole!");
+//    }
 
 
     
@@ -515,7 +515,7 @@ public class Mavenproject1 {
     
     
     
-////    //EXAMPLES
+//  //EXAMPLES
 //
 //  //Tutorial - vraci celkovou plochu budov menších než 100 m2
 //  public static void main(String[] args) throws Exception {
@@ -637,78 +637,78 @@ public class Mavenproject1 {
   
   
     
-//  //AdvancedExample - kód odkazuje na externí soubor a definuje si nové třídy a tvoří graf
-//  public static void main(String[] args) throws Exception {
-//    OSHDBDatabase oshdb = new OSHDBH2("D:/NetBeansProjects/heidelberg.oshdb.mv.db");
-//    SortedMap<OSHDBTimestamp, Map<ContributionType, Integer>> reduce = OSMContributionView.on(oshdb) //vůbec zde není uvedeno omezení souřadnicemi! Bere se celé území.
-//          .timestamps("2019-01-01", "2020-01-01", OSHDBTimestamps.Interval.MONTHLY)
-//          .filter("geometry:polygon and building=*")
-//          .map(new Mapper())
-//          .aggregateByTimestamp()
-//          .reduce(new IdentitySupplier(), new Combiner());
-//    
-//    //Display Result
-//    TutorialChart chart = new TutorialChart("BigDB Analyses", "Contribution-Types per timestamp!", reduce);
-//    chart.pack();
-//    RefineryUtilities.centerFrameOnScreen(chart);
-//    chart.setVisible(true);
-//    System.out.println("Diggy diggy hole!");
-//  }
-//
-//  private static class Mapper implements
-//      SerializableFunction<OSMContribution, Map<ContributionType, Integer>> {
-//
-//    @Override
-//    public Map<ContributionType, Integer> apply(OSMContribution contribution) {
-//      //get an empty result-map
-//      Map<ContributionType, Integer> result = new IdentitySupplier().get();
-////      System.out.println("changeset: "+contribution.getChangesetId());
-////      System.out.println("Entity id: "+contribution.getEntityBefore().getId());
-////      System.out.println("contributionTypes: "+contribution.getContributionTypes());
-//      //count contribution-types
-//      contribution.getContributionTypes().forEach((var type) ->                 //Kdyz potrebujete do Lambda expression pridat dalsi radek, pouzijte lomene zavorky.
-//            {
-//              System.out.println("changeset: "+contribution.getChangesetId());
-//              System.out.println("Entity id: "+contribution.getEntityAfter().getId());
-//              System.out.println("contributionTypes: "+contribution.getContributionTypes());
-//              result.put(type, result.get(type) + 1);
-////              System.out.println("type: "+type+" "+result.get(type)+" ");
-//            });
-//      return result;
-//    }
-//  }
-//
-//  private static class IdentitySupplier implements
-//      SerializableSupplier<Map<ContributionType, Integer>> {
-//
-//    @Override
-//    public Map<ContributionType, Integer> get() {
-//      //create an empty result-map
-//      Map<ContributionType, Integer> result = new EnumMap<>(ContributionType.class);
-//      //fill with 0 values
-//      Arrays.asList(ContributionType.values())
-//          .forEach(type -> result.put(type, 0));
-//      return result;
-//    }
-//  }
-//
-//  private static class Combiner implements
-//      SerializableBinaryOperator<Map<ContributionType, Integer>> {
-//
-//    @Override
-//    public Map<ContributionType, Integer> apply(
-//        Map<ContributionType, Integer> mapResultA,
-//        Map<ContributionType, Integer> mapResultB) {
-//      //get an empty result-map
-//      Map<ContributionType, Integer> result = new IdentitySupplier().get();
-//      //put all counts of map-result A
-//      result.putAll(mapResultA);
-//      //sum up with all result from map-result B
-//      mapResultB.forEach((ContributionType contribType, Integer integ) ->
-//          result.merge(contribType, integ, Integer::sum));
-//      return result;
-//    }
-//  } 
+  //AdvancedExample - kód odkazuje na externí soubor a definuje si nové třídy a tvoří graf
+  public static void main(String[] args) throws Exception {
+    OSHDBDatabase oshdb = new OSHDBH2("D:/NetBeansProjects/heidelberg.oshdb.mv.db");
+    SortedMap<OSHDBTimestamp, Map<ContributionType, Integer>> reduce = OSMContributionView.on(oshdb) //vůbec zde není uvedeno omezení souřadnicemi! Bere se celé území.
+          .timestamps("2019-01-01", "2020-01-01", OSHDBTimestamps.Interval.MONTHLY)
+          .filter("geometry:polygon and building=*")
+          .map(new Mapper())
+          .aggregateByTimestamp()
+          .reduce(new IdentitySupplier(), new Combiner());
+    
+    //Display Result
+    TutorialChart chart = new TutorialChart("BigDB Analyses", "Contribution-Types per timestamp!", reduce);
+    chart.pack();
+    RefineryUtilities.centerFrameOnScreen(chart);
+    chart.setVisible(true);
+    System.out.println("Diggy diggy hole!");
+  }
+
+  private static class Mapper implements
+      SerializableFunction<OSMContribution, Map<ContributionType, Integer>> {
+
+    @Override
+    public Map<ContributionType, Integer> apply(OSMContribution contribution) {
+      //get an empty result-map
+      Map<ContributionType, Integer> result = new IdentitySupplier().get();
+//      System.out.println("changeset: "+contribution.getChangesetId());
+//      System.out.println("Entity id: "+contribution.getEntityBefore().getId());
+//      System.out.println("contributionTypes: "+contribution.getContributionTypes());
+      //count contribution-types
+      contribution.getContributionTypes().forEach((var type) ->                 //Kdyz potrebujete do Lambda expression pridat dalsi radek, pouzijte lomene zavorky.
+            {
+              System.out.println("changeset: "+contribution.getChangesetId());
+              System.out.println("Entity id: "+contribution.getEntityAfter().getId());
+              System.out.println("contributionTypes: "+contribution.getContributionTypes());
+              result.put(type, result.get(type) + 1);
+//              System.out.println("type: "+type+" "+result.get(type)+" ");
+            });
+      return result;
+    }
+  }
+
+  private static class IdentitySupplier implements
+      SerializableSupplier<Map<ContributionType, Integer>> {
+
+    @Override
+    public Map<ContributionType, Integer> get() {
+      //create an empty result-map
+      Map<ContributionType, Integer> result = new EnumMap<>(ContributionType.class);
+      //fill with 0 values
+      Arrays.asList(ContributionType.values())
+          .forEach(type -> result.put(type, 0));
+      return result;
+    }
+  }
+
+  private static class Combiner implements
+      SerializableBinaryOperator<Map<ContributionType, Integer>> {
+
+    @Override
+    public Map<ContributionType, Integer> apply(
+        Map<ContributionType, Integer> mapResultA,
+        Map<ContributionType, Integer> mapResultB) {
+      //get an empty result-map
+      Map<ContributionType, Integer> result = new IdentitySupplier().get();
+      //put all counts of map-result A
+      result.putAll(mapResultA);
+      //sum up with all result from map-result B
+      mapResultB.forEach((ContributionType contribType, Integer integ) ->
+          result.merge(contribType, integ, Integer::sum));
+      return result;
+    }
+  } 
     
      
 }
